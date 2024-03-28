@@ -1,10 +1,13 @@
 // Importing prompt-sync library
 const prompt = require('prompt-sync')();
 
-// Function to convert input to number and validate
+//turning input to number
 function getInput(promptMessage) {
     const input = prompt(promptMessage);
-    const inputNum = parseInt(input.replace(/,/g, '')); // Remove commas from input
+    const inputNum = parseInt(input.replace(/,/g, '')); 
+   
+    // Remove commas from input
+
     if (isNaN(inputNum)) {
         console.log("Invalid input. Please enter a numeric value.");
         return NaN;
@@ -12,15 +15,15 @@ function getInput(promptMessage) {
     return inputNum;
 }
 
-// Function to calculate net salary
+// calculating net salary
 function calculateNetSalary(basicSalary, benefits) {
-    // Define tax rates
+    // tax rates
     const taxRates = [0.1, 0.25, 0.3, 0.325, 0.35];
     const thresholds = [24000, 32334, 500000, 800000];
     const nhifRates = [0, 150, 300, 400, 500, 600, 750, 850, 900, 950]; // NHIF deductions for different salary ranges
     const nssfRate = 0.06; // NSSF deductions rate
 
-    // Calculate gross salary
+    // gross salary
     const grossSalary = basicSalary + benefits;
 
     // Calculate tax (PAYE)
@@ -36,7 +39,7 @@ function calculateNetSalary(basicSalary, benefits) {
         }
     }
 
-    // Calculate NHIF deductions based on gross salary
+    // NHIF deductions based on gross salary
     let nhifDeductions = 0;
     for (let i = nhifRates.length - 1; i >= 0; i--) {
         if (grossSalary >= nhifRates[i]) {
@@ -45,13 +48,13 @@ function calculateNetSalary(basicSalary, benefits) {
         }
     }
 
-    // Calculate NSSF deductions
+    // NSSF deductions
     let nssfDeductions = nssfRate * grossSalary;
 
     // Calculate net salary
     const netSalary = grossSalary - tax - nhifDeductions - nssfDeductions;
 
-    // Return salary details
+    // salary details
     return {
         grossSalary: grossSalary,
         tax: tax,
@@ -65,9 +68,9 @@ function calculateNetSalary(basicSalary, benefits) {
 const basicSalary = getInput("Enter basic salary (in Ksh): ");
 const benefits = getInput("Enter benefits (in Ksh): ");
 
-// Check if inputs are valid
+// input validity test
 if (!isNaN(basicSalary) && !isNaN(benefits)) {
-    // Calculate salary details
+    // salary details
     const salaryDetails = calculateNetSalary(basicSalary, benefits);
 
     // Output salary details
